@@ -15,8 +15,12 @@
         <div class="scale scale9"></div>
       </div>
       <div class="clock-face">
-        <div class="hand hour-hand"></div>
-        <div class="hand min-hand"></div>
+        <div class="hand hour-hand">
+          <div class="hour-info"></div>
+        </div>
+        <div class="hand min-hand">
+          <div class="min-info"></div>
+        </div>
         <div class="hand second-hand"></div>
         <div class="hand-core"></div>
       </div>
@@ -133,12 +137,24 @@
       border-color: transparent #361303 transparent transparent;
     }
 
+    .hour-info{
+      left: 70%;
+      position: absolute;
+    }
+
+    .min-info{
+      left: 70%;
+      position: absolute;
+    }
+
   </style>
 
   <script>
     const hourHand = document.querySelector('.hour-hand');
     const minHand = document.querySelector('.min-hand');
     const secondHand = document.querySelector('.second-hand');
+    const hourInfo = document.querySelector('.hour-info');
+    const minInfo = document.querySelector('.min-info');
     const hourDeg = 360 / 12;
     const minDeg = 360 / 60;
     const secondDeg = 360 / 60;
@@ -154,8 +170,10 @@
       hourHand.style.transform = `rotate(${hourTranDeg+90}deg)`;
       minHand.style.transform = `rotate(${minTranDeg+90}deg)`;
       secondHand.style.transform = `rotate(${secondTranDeg+90}deg)`;
-      hourHand.innerText = nowHour;
-      minHand.innerText = nowMin;
+      hourInfo.innerText = nowHour;
+      minInfo.innerText = nowMin;
+      hourInfo.style.transform = `rotate(${180-hourTranDeg+90}deg)`;
+      minInfo.style.transform = `rotate(${180-minTranDeg+90}deg)`;
     }
 
     setInterval(setTime, 1000);
