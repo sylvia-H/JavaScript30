@@ -172,8 +172,8 @@
       secondHand.style.transform = `rotate(${secondTranDeg+90}deg)`;
       hourInfo.innerText = nowHour;
       minInfo.innerText = nowMin;
-      hourInfo.style.transform = `rotate(${180-hourTranDeg+90}deg)`;
-      minInfo.style.transform = `rotate(${180-minTranDeg+90}deg)`;
+      hourInfo.style.transform = `rotate(${360-(hourTranDeg+90)}deg)`;
+      minInfo.style.transform = `rotate(${360-(minTranDeg+90)}deg)`;
     }
 
     setInterval(setTime, 1000);
