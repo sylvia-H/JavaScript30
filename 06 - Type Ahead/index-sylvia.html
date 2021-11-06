@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Type Ahead 👀</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <form class="search-form">
+    <input type="text" class="search" placeholder="City or State">
+    <ul class="suggestions">
+      <li>Filter for a city</li>
+      <li>or a state</li>
+    </ul>
+  </form>
+<script>
+const endpoint = 'https://gist.githubusercontent.com/Miserlou/c5cd8364bf9b2420bb29/raw/2bf258763cdddd704f8ffd3ea9a3e81d25e2c6f6/cities.json';
+
+let data = [];
+let request = new XMLHttpRequest();
+request.open('GET', endpoint);
+request.responseType = 'json';
+request.send();
+request.onload = function() {
+  let result = request.response;
+  result.forEach(el => {
+    data.push(el);
+  });
+  console.log(data);
+}
+
+const searchWord = document.querySelector('.search');
+const result = document.querySelector('.suggestions');
+
+function findMatch(){
+  const regExp = new RegExp(searchWord.value,'gi');
+  return data.filter(el=>el.city.match(regExp) || el.state.match(regExp));
+}
+
+function render(){
+  const cacheData = findMatch();
+  let str = cacheData.map(el=>{
+    const regExp = new RegExp(this.value,'gi');
+    const cityName = el.city.replace(regExp,`<span class="hl">${this.value}</span>`);
+    const stateName = el.state.replace(regExp,`<span class="hl">${this.value}</span>`);
+    return `
+    <li>
+      <span class="name">${cityName}, ${stateName}</span>
+      <span class="population">${parseInt(el.population).toLocaleString()}</span>
+    </li>`
+  }).join('');
+  result.innerHTML = str;
+}
+
+searchWord.addEventListener('keyup', render);
+
+</script>
+</body>
+</html>
