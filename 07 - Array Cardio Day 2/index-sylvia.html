@@ -30,7 +30,7 @@
     console.log(ans01);
 
     // Array.prototype.every() // is everyone 19 or older?
-    let ans02 = people.every(el=>new Date().getYear() + 1900 - el.year >= 19);
+    let ans02 = people.every(el=>new Date().getFullYear() - el.year >= 19);
     console.log(ans02);
 
 
